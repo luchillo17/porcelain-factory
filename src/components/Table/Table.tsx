@@ -1,18 +1,40 @@
 import * as React from 'react';
 import { Table } from 'react-bootstrap';
 
-interface TableProps {
+import { map } from 'lodash';
+
+interface TableProps<T> {
   fields: Field[];
+  items: {
+    [key: string]: T,
+  };
 }
 
 interface TableState {}
 
-export class CustomTable extends React.Component<TableProps, TableState> {
+export class CustomTable<T> extends React.Component<TableProps<T>, TableState> {
 
   public renderHeaders() {
-    return this.props.fields.map((field) =>
+    return map(this.props.fields, (field) =>
       <td key={field.key}>{field.label}</td>
     );
+  }
+
+  public renderItems() {
+    return map(
+      this.props.items,
+      (item) => (
+        <tr key={(item as any).id}>
+          {this.renderItem(item)}
+        </tr>
+      )
+    );
+  }
+
+  public renderItem(item: T) {
+    return map(this.props.fields, (field) => (
+      <td key={field.key}>{item[field.key]}</td>
+    ));
   }
 
   public render(): JSX.Element {
@@ -30,7 +52,9 @@ export class CustomTable extends React.Component<TableProps, TableState> {
               {this.renderHeaders()}
             </tr>
           </thead>
-          <tbody />
+          <tbody>
+            {this.renderItems()}
+          </tbody>
         </Table>
       </div>
     );

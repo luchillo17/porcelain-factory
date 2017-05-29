@@ -10,6 +10,13 @@ const productsInitialState: Products = {
     type: 'Piso',
     price: '60000',
     considerations: '',
+  },
+  1: {
+    id: '1',
+    name: 'Cemento',
+    type: 'Material',
+    price: '25000',
+    considerations: '',
   }
 };
 

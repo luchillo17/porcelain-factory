@@ -35,11 +35,13 @@ class ProductsPage extends React.Component<ProductProps, any> {
     });
   }
   public render(): JSX.Element {
+    let ProductTable = CustomTable as new () => CustomTable<Product>;
     return (
       <div className="Products">
         Products
-        <CustomTable
+        <ProductTable
           fields={this.state.fields}
+          items={this.props.products}
         />
       </div>
     );
