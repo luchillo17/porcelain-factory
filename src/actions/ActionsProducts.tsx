@@ -10,8 +10,6 @@ export const setProduct: ActionCreator<Action> =
     payload,
   });
 
-
-
 export const deleteProduct: ActionCreator<Action> =
   (payload: string) => ({
     type: DELETE_PRODUCT,

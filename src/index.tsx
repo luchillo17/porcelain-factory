@@ -20,15 +20,18 @@ const store = createStore(reducers, composeWithDevTools());
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Switch>
-        {/*<Route path="/" component={} />
-        <Route path="/" component={} />
-        <Route path="/" component={} />
-        <Route path="/" component={} />
-        <Route path="/" component={} />*/}
-        <Route path="/products" component={Products} />
-        <Route path="/" exact={true} component={App} />
-      </Switch>
+      <div>
+        <App />
+        <Switch>
+          {/*<Route path="/" component={} />
+          <Route path="/" component={} />
+          <Route path="/" component={} />
+          <Route path="/" component={} />
+          <Route path="/" component={} />*/}
+          <Route path="/products" component={Products} />
+          <Route path="/" exact={true} component={Products} />
+        </Switch>
+      </div>
     </Router>
   </Provider>
   ,

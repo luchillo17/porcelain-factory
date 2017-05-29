@@ -10,9 +10,9 @@ import {
   FormGroup,
   FormControl,
   InputGroup,
+  Panel,
 } from 'react-bootstrap';
 import { debounce } from 'lodash';
-
 
 import { searchByTerm } from '../../actions';
 
@@ -48,21 +48,23 @@ export class SearchBarComponent extends React.Component<SearchBarProps, SearchBa
 
   public render(): JSX.Element {
     return (
-      <Form inline={true}>
-        <FormGroup
-          controlId="formBasicText"
-        >
-          <InputGroup>
-            <InputGroup.Addon>Buscar: </InputGroup.Addon>
-            <FormControl
-              type="text"
-              placeholder="Enter text"
-              onChange={this.onChange}
-            />
-          </InputGroup>
-          <FormControl.Feedback />
-        </FormGroup>
-      </Form>
+      <Panel>
+        <Form inline={true}>
+          <FormGroup
+            controlId="formBasicText"
+          >
+            <InputGroup>
+              <InputGroup.Addon>Buscar: </InputGroup.Addon>
+              <FormControl
+                type="text"
+                placeholder="Enter text"
+                onChange={this.onChange}
+              />
+            </InputGroup>
+            <FormControl.Feedback />
+          </FormGroup>
+        </Form>
+      </Panel>
     );
   }
 }

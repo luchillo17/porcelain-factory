@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
+import { Jumbotron, Panel } from 'react-bootstrap';
 
 import { SearchBar } from '..';
 import { CustomTable } from '../../components';
@@ -41,14 +42,18 @@ class ProductsPage extends React.Component<ProductProps, any> {
   public render(): JSX.Element {
     let ProductTable = CustomTable as new () => CustomTable<Product>;
     return (
-      <div className="Products">
-        Products
-        <SearchBar />
-        <ProductTable
-          fields={this.state.fields}
-          items={this.props.products}
-        />
-      </div>
+      <Jumbotron>
+        <div className="Products">
+          <Panel>
+            <h1>Productos</h1>
+          </Panel>
+          <SearchBar />
+          <ProductTable
+            fields={this.state.fields}
+            items={this.props.products}
+          />
+        </div>
+      </Jumbotron>
     );
   }
 }

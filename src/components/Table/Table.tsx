@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Panel } from 'react-bootstrap';
 
 import { map } from 'lodash';
 
@@ -39,7 +39,7 @@ export class CustomTable<T> extends React.Component<TableProps<T>, TableState> {
 
   public render(): JSX.Element {
     return (
-      <div className="Table">
+      <Panel className="Table">
         <Table
           responsive={true}
           condensed={true}
@@ -56,7 +56,7 @@ export class CustomTable<T> extends React.Component<TableProps<T>, TableState> {
             {this.renderItems()}
           </tbody>
         </Table>
-      </div>
+      </Panel>
     );
   }
 }
