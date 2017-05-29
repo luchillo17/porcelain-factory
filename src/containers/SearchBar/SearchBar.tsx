@@ -3,6 +3,8 @@ import {
   Component,
   FormEvent,
 } from 'react';
+import { Action } from 'redux';
+import { connect, ActionCreator } from 'react-redux';
 import {
   Form,
   FormGroup,
@@ -11,26 +13,32 @@ import {
 } from 'react-bootstrap';
 import { debounce } from 'lodash';
 
+
+import { searchByTerm } from '../../actions';
+
 interface SearchBarProps {
-  handleSearch: (term: string) => void;
+  searchByTerm: ActionCreator<Action>;
 }
 
-interface SearchBarState {}
+interface SearchBarState {
+
+}
 
 type FormControlEvent = FormEvent<Component<FormGroup, {}>>;
 
-export class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
+export class SearchBarComponent extends React.Component<SearchBarProps, SearchBarState> {
   constructor(props: SearchBarProps) {
     super(props);
 
-    // this.search = debounce(this.search.bind(this), 300);
+    this.props.searchByTerm('');
+
     this.search = debounce(this.search.bind(this), 300);
     this.onChange = this.onChange.bind(this);
   }
 
   public search(event: FormControlEvent) {
     let target = event.target as HTMLInputElement;
-    this.props.handleSearch(target.value);
+    this.props.searchByTerm(target.value);
   }
 
   public onChange(event: FormControlEvent) {
@@ -58,3 +66,14 @@ export class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
     );
   }
 }
+
+const mapStateToProps = ({ searchTerm }) => ({
+
+});
+
+const mapDispatchToProps = {
+  searchByTerm,
+};
+
+export const SearchBar: React.ComponentClass<any> =
+  connect(mapStateToProps, mapDispatchToProps)(SearchBarComponent);

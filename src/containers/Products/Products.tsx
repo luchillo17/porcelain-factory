@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { Action } from 'redux';
-import { connect, ActionCreator } from 'react-redux';
+import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { CustomTable, SearchBar } from '../../components';
-import { searchProduct } from '../../actions';
+import { SearchBar } from '..';
+import { CustomTable } from '../../components';
 import { filteredProducts } from '../../selectors';
 
 interface ProductProps extends RouteComponentProps<any> {
   products: Products;
-  searchProduct: ActionCreator<Action>;
 }
 
 class ProductsPage extends React.Component<ProductProps, any> {
@@ -38,11 +36,6 @@ class ProductsPage extends React.Component<ProductProps, any> {
       ]  as Field[],
     });
 
-    this.handleSearch = this.handleSearch.bind(this);
-  }
-
-  public handleSearch(term: string) {
-    this.props.searchProduct(term);
   }
 
   public render(): JSX.Element {
@@ -50,9 +43,7 @@ class ProductsPage extends React.Component<ProductProps, any> {
     return (
       <div className="Products">
         Products
-        <SearchBar
-          handleSearch={this.handleSearch}
-        />
+        <SearchBar />
         <ProductTable
           fields={this.state.fields}
           items={this.props.products}
@@ -66,9 +57,7 @@ const mapStateToProps = (state) => ({
   products: filteredProducts(state),
 });
 
-const mapDispatchToProps = {
-  searchProduct,
-};
+const mapDispatchToProps = {};
 
 export const Products: React.ComponentClass<any> =
   connect(mapStateToProps, mapDispatchToProps)(ProductsPage);
