@@ -8,7 +8,8 @@ import {
   createStore,
 } from 'redux';
 
-import { App, Products } from './components';
+import { App } from './components';
+import { Products } from './containers';
 import { reducers } from './reducers';
 
 import registerServiceWorker from './registerServiceWorker';

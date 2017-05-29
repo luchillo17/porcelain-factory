@@ -1,3 +1,3 @@
 export * from './App/App';
+export * from './SearchBar/SearchBar';
 export * from './Table/Table';
-export * from './Products/Products';
