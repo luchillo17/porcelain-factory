@@ -14,3 +14,9 @@ interface Product {
   price: string;
   considerations: string;
 }
+
+// Table specific
+interface Field {
+  label: string;
+  key: string
+}
