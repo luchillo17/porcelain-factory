@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { CustomTable, SearchBar } from '../../components';
 import { searchProduct } from '../../actions';
+import { filteredProducts } from '../../selectors';
 
 interface ProductProps extends RouteComponentProps<any> {
   products: Products;
@@ -61,8 +62,8 @@ class ProductsPage extends React.Component<ProductProps, any> {
   }
 }
 
-const mapStateToProps = ({ products }) => ({
-  products,
+const mapStateToProps = (state) => ({
+  products: filteredProducts(state),
 });
 
 const mapDispatchToProps = {

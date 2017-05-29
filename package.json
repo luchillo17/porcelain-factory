@@ -14,6 +14,7 @@
     "redux-form": "^6.7.0",
     "redux-promise": "^0.5.3",
     "redux-router": "^2.1.2",
+    "reselect": "^3.0.1",
     "uuid": "^3.0.1"
   },
   "devDependencies": {

@@ -24,13 +24,11 @@ export class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
     super(props);
 
     // this.search = debounce(this.search.bind(this), 300);
-    this.search = debounce(this.search, 300);
+    this.search = debounce(this.search.bind(this), 300);
     this.onChange = this.onChange.bind(this);
-
   }
 
   public search(event: FormControlEvent) {
-    // console.log('Event: ', event);
     let target = event.target as HTMLInputElement;
     this.props.handleSearch(target.value);
   }

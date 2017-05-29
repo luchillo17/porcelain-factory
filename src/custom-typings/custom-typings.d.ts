@@ -1,6 +1,7 @@
 // State specific
 interface RXState {
   products: Products;
+  searchTerm: string;
 }
 
 interface Products {
