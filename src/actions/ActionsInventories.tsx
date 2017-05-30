@@ -5,7 +5,7 @@ export const SET_INVENTORY = 'SET_INVENTORY';
 export const DELETE_INVENTORY = 'DELETE_INVENTORY';
 
 export const setInventory: ActionCreator<Action> =
-  (payload: Product) => ({
+  (payload: Inventory) => ({
     type: SET_INVENTORY,
     payload,
   });

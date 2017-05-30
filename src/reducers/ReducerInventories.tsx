@@ -15,7 +15,7 @@ const inventoriesInitialState: Inventories = {
     productId: '0',
     quantity: 120,
     reserved: 0,
-  }
+  },
 };
 
 export const InventoriesReducer: MyReducer<Inventories> =

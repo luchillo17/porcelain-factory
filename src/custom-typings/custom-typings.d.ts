@@ -29,6 +29,28 @@ interface Inventory {
   reserved: number;
 }
 
+// Orders
+interface Orders {
+  [key: string]: Order;
+}
+
+interface OrderItems {
+  [key: string]: OrderItem;
+}
+
+interface Order {
+  id: string;
+  customer: string;
+  address: string;
+}
+
+interface OrderItem {
+  id: string;
+  orderId: string;
+  productId: string;
+  quantity: number;
+}
+
 // Table specific
 interface Field {
   label: string;

@@ -17,7 +17,7 @@ const productsInitialState: Products = {
     type: 'Material',
     price: '25000',
     considerations: '',
-  }
+  },
 };
 
 export const ProductsReducer: MyReducer<Products> =
