@@ -9,7 +9,10 @@ import {
 } from 'redux';
 
 import { App } from './components';
-import { Products } from './containers';
+import {
+  Products,
+  Inventories,
+} from './containers';
 import { reducers } from './reducers';
 
 import registerServiceWorker from './registerServiceWorker';
@@ -26,8 +29,8 @@ ReactDOM.render(
           {/*<Route path="/" component={} />
           <Route path="/" component={} />
           <Route path="/" component={} />
-          <Route path="/" component={} />
           <Route path="/" component={} />*/}
+          <Route path="/inventories" component={Inventories} />
           <Route path="/products" component={Products} />
           <Route path="/" exact={true} component={Products} />
         </Switch>

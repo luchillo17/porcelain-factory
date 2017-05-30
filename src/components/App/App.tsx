@@ -34,7 +34,7 @@ export class App extends React.Component<any, any> {
                   Productos
                 </NavItem>
               </LinkContainer>
-              <LinkContainer to="/inventory">
+              <LinkContainer to="/inventories">
                 <NavItem>
                   Inventario
                 </NavItem>
