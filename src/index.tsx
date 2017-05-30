@@ -10,6 +10,7 @@ import {
 
 import { App } from './components';
 import {
+  Order,
   Orders,
   Products,
   Inventories,
@@ -28,11 +29,11 @@ ReactDOM.render(
         <App />
         <Switch>
           {/*<Route path="/" component={} />
-          <Route path="/" component={} />
           <Route path="/" component={} />*/}
           <Route path="/inventories" component={Inventories} />
           <Route path="/products" component={Products} />
           <Route path="/orders" component={Orders} />
+          <Route path="/order/:id" component={Order} />
           <Route path="/" exact={true} component={Products} />
         </Switch>
       </div>

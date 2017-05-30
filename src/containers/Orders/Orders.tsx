@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, MapStateToProps } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Jumbotron, Panel } from 'react-bootstrap';
 
@@ -62,7 +62,7 @@ class OrdersPage extends React.Component<OrdersProps, any> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps: MapStateToProps<{orders: Orders}, RouteComponentProps<any>> = (state, ownProps) => ({
   orders: filteredOrders(state),
 });
 
