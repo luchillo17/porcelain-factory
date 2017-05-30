@@ -8,14 +8,14 @@ const productsInitialState: Products = {
     id: '0',
     name: 'Baldosa',
     type: 'Piso',
-    price: '60000',
+    price: 60000,
     considerations: '',
   },
   1: {
     id: '1',
     name: 'Cemento',
     type: 'Material',
-    price: '25000',
+    price: 25000,
     considerations: '',
   },
 };

@@ -5,15 +5,15 @@ import { Jumbotron, Panel } from 'react-bootstrap';
 
 import { SearchBar } from '..';
 import { CustomTable } from '../../components';
-import { filteredInventories } from '../../selectors';
+import { filteredOrders } from '../../selectors';
 
-interface InventoriesProps extends RouteComponentProps<any> {
-  inventories: Inventories;
+interface OrdersProps extends RouteComponentProps<any> {
+  orders: Orders;
 }
 
-class InventoriesPage extends React.Component<InventoriesProps, any> {
+class OrdersPage extends React.Component<OrdersProps, any> {
 
-  constructor(props: InventoriesProps) {
+  constructor(props: OrdersProps) {
     super(props);
 
     this.state = ({
@@ -23,20 +23,20 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
           label: 'Id',
         },
         {
-          key: 'productId',
-          label: 'Id Producto',
+          key: 'customer',
+          label: 'Cliente',
         },
         {
-          key: 'product.name',
-          label: 'Nombre',
+          key: 'address',
+          label: 'Dirección',
         },
         {
           key: 'quantity',
           label: 'Cantidad',
         },
         {
-          key: 'reserved',
-          label: 'Reservado',
+          key: 'total',
+          label: 'Total',
         },
       ]  as Field[],
     });
@@ -44,17 +44,17 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
   }
 
   public render(): JSX.Element {
-    let InventoryTable = CustomTable as new () => CustomTable<Inventory>;
+    let OrderTable = CustomTable as new () => CustomTable<Order>;
     return (
       <Jumbotron>
-        <div className="Inventories">
+        <div className="Orders">
           <Panel>
-            <h1>Inventario</h1>
+            <h1>Ordenes</h1>
           </Panel>
           <SearchBar />
-          <InventoryTable
+          <OrderTable
             fields={this.state.fields}
-            items={this.props.inventories}
+            items={this.props.orders}
           />
         </div>
       </Jumbotron>
@@ -63,10 +63,10 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
 }
 
 const mapStateToProps = (state) => ({
-  inventories: filteredInventories(state),
+  orders: filteredOrders(state),
 });
 
 const mapDispatchToProps = {};
 
-export const Inventories: React.ComponentClass<any> =
-  connect(mapStateToProps, mapDispatchToProps)(InventoriesPage);
+export const Orders: React.ComponentClass<any> =
+  connect(mapStateToProps, mapDispatchToProps)(OrdersPage);
