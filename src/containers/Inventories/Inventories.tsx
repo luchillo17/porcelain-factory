@@ -6,7 +6,7 @@ import { Jumbotron, Panel, Button } from 'react-bootstrap';
 import { SearchInput } from '..';
 import { CustomTable } from '../../components';
 import { filteredInventories } from '../../selectors';
-import { LinkContainer } from "react-router-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap';
 
 interface InventoriesProps extends RouteComponentProps<any> {
   inventories: Inventories;

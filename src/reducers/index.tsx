@@ -13,6 +13,7 @@ import { SearchTermReducer } from './ReducerSearchTerm';
 
 const rootReducer = combineReducers<RXState>({
   form: formReducer,
+
   products: ProductsReducer,
   inventories: InventoriesReducer,
 

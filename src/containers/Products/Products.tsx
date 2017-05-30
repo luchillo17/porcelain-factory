@@ -6,7 +6,7 @@ import { Jumbotron, Panel, Button } from 'react-bootstrap';
 import { SearchInput } from '..';
 import { CustomTable } from '../../components';
 import { filteredProducts } from '../../selectors';
-import { LinkContainer } from "react-router-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap';
 
 interface ProductProps extends RouteComponentProps<any> {
   products: Products;
