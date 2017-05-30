@@ -42,6 +42,11 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
       ]  as Field[],
     });
 
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  public handleClick(key: string) {
+    this.props.history.push(`/inventories/${key}`);
   }
 
   public render(): JSX.Element {
@@ -61,6 +66,7 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
           <InventoryTable
             fields={this.state.fields}
             items={this.props.inventories}
+            itemClick={this.handleClick}
           />
         </div>
       </Jumbotron>

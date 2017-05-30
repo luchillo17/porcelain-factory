@@ -42,6 +42,11 @@ class OrdersPage extends React.Component<OrdersProps, any> {
       ]  as Field[],
     });
 
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  public handleClick(key: string) {
+    this.props.history.push(`/orders/${key}`);
   }
 
   public render(): JSX.Element {
@@ -61,6 +66,7 @@ class OrdersPage extends React.Component<OrdersProps, any> {
           <OrderTable
             fields={this.state.fields}
             items={this.props.orders}
+            itemClick={this.handleClick}
           />
         </div>
       </Jumbotron>

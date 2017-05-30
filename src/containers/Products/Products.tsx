@@ -38,6 +38,11 @@ class ProductsPage extends React.Component<ProductProps, any> {
       ]  as Field[],
     });
 
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  public handleClick(key: string) {
+    this.props.history.push(`/products/${key}`);
   }
 
   public render(): JSX.Element {
@@ -57,6 +62,7 @@ class ProductsPage extends React.Component<ProductProps, any> {
           <ProductTable
             fields={this.state.fields}
             items={this.props.products}
+            itemClick={this.handleClick}
           />
         </div>
       </Jumbotron>
