@@ -9,6 +9,7 @@ interface FormInputProps extends WrappedFieldProps<any> {
   label: string;
   readOnly: boolean;
   placeholder: string;
+  componentClass: string;
 }
 
 interface FormInputState {}
@@ -21,6 +22,7 @@ export class FormInput extends React.Component<FormInputProps, FormInputState> {
       label,
       input,
       readOnly,
+      componentClass,
       placeholder = 'Enter text',
       meta: { error, warning, touched },
       ...props
@@ -42,6 +44,7 @@ export class FormInput extends React.Component<FormInputProps, FormInputState> {
           <InputGroup.Addon>{label}: </InputGroup.Addon>
           <FormControl
             type={type}
+            componentClass={componentClass}
             readOnly={readOnly}
             placeholder={placeholder}
             {...input}

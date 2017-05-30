@@ -80,8 +80,8 @@ class ProductPage extends React.Component<ProductProps, any> {
               />
               <Field
                 name="considerations"
-                type="textarea"
                 label="Consideraciones"
+                componentClass="textarea"
                 component={FormInput}
               />
               <button type="submit">Guardar</button>
