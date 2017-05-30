@@ -25,3 +25,16 @@ body {
   padding: 40px 20px;
   margin-bottom: 0px;
 }
+
+.utility-toolbar .panel-body {
+  display: flex;
+  > :first-child {
+    margin-right: 5px;
+  }
+  > :last-child {
+    margin-left: 5px;
+  }
+  > :not(:first-child):not(:last-child) {
+    margin: 0 5px;
+  }
+}
