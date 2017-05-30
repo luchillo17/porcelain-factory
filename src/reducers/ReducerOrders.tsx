@@ -53,13 +53,13 @@ const orderItemsInitialState: OrderItems = {
     id: '2',
     orderId: '1',
     productId: '0',
-    quantity: 4,
+    quantity: 5,
   },
   3: {
     id: '3',
     orderId: '1',
     productId: '1',
-    quantity: 1,
+    quantity: 4,
   },
 };
 

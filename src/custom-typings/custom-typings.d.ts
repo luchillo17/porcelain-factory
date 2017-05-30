@@ -17,7 +17,7 @@ interface Product {
   id: string;
   name: string;
   type: string;
-  price: string;
+  price: number;
   considerations: string;
 }
 
@@ -48,6 +48,8 @@ interface Order {
   id: string;
   customer: string;
   address: string;
+  quantity?: number;
+  total?: number;
 }
 
 interface OrderItem {
