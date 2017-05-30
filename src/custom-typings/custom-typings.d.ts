@@ -1,6 +1,10 @@
 // State specific
 interface RXState {
   products: Products;
+  inventories: Inventories;
+  orders: Orders;
+  orderItems: OrderItems;
+
   searchTerm: string;
 }
 
@@ -27,6 +31,8 @@ interface Inventory {
   productId: string;
   quantity: number;
   reserved: number;
+
+  product?: Product;
 }
 
 // Orders
@@ -49,6 +55,8 @@ interface OrderItem {
   orderId: string;
   productId: string;
   quantity: number;
+
+  product?: Product;
 }
 
 // Table specific

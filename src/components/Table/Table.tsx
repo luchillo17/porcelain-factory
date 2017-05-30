@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Table, Panel } from 'react-bootstrap';
 
-import { map } from 'lodash';
+import { map, at } from 'lodash';
 
 interface TableProps<T> {
   fields: Field[];
@@ -33,7 +33,7 @@ export class CustomTable<T> extends React.Component<TableProps<T>, TableState> {
 
   public renderItem(item: T) {
     return map(this.props.fields, (field) => (
-      <td key={field.key}>{item[field.key]}</td>
+      <td key={field.key}>{at(item as any, field.key)}</td>
     ));
   }
 
