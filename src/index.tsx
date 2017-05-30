@@ -8,7 +8,8 @@ import {
   createStore,
 } from 'redux';
 
-import { App, Products } from './components';
+import { App } from './components';
+import { Products } from './containers';
 import { reducers } from './reducers';
 
 import registerServiceWorker from './registerServiceWorker';
@@ -19,15 +20,18 @@ const store = createStore(reducers, composeWithDevTools());
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Switch>
-        {/*<Route path="/" component={} />
-        <Route path="/" component={} />
-        <Route path="/" component={} />
-        <Route path="/" component={} />
-        <Route path="/" component={} />*/}
-        <Route path="/products" component={Products} />
-        <Route path="/" exact={true} component={App} />
-      </Switch>
+      <div>
+        <App />
+        <Switch>
+          {/*<Route path="/" component={} />
+          <Route path="/" component={} />
+          <Route path="/" component={} />
+          <Route path="/" component={} />
+          <Route path="/" component={} />*/}
+          <Route path="/products" component={Products} />
+          <Route path="/" exact={true} component={Products} />
+        </Switch>
+      </div>
     </Router>
   </Provider>
   ,
