@@ -81,7 +81,7 @@ class InventoryPage extends React.Component<InventoryProps, any> {
                 {
                   map(products, product => {
                     return (
-                      <option value={product.id}>
+                      <option key={product.id} value={product.id}>
                         {product.name}
                       </option>
                     );
@@ -90,10 +90,14 @@ class InventoryPage extends React.Component<InventoryProps, any> {
               </Field>
               <Field
                 name="quantity"
-                type="text"
+                type="number"
                 label="Cantidad"
                 component={FormInput}
-                validate={[Validators.required, Validators.number]}
+                validate={[
+                  Validators.required,
+                  Validators.number,
+                  Validators.minValueInclusive(0),
+                ]}
               />
               <div className="formButtons">
                 <Button bsStyle="primary" type="submit">Guardar</Button>
