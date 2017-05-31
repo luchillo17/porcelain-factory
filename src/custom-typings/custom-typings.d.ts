@@ -11,7 +11,7 @@ interface RXState {
 // Form specific
 
 // Table specific
-interface Field {
+interface TableField {
   label: string;
   key: string;
 }

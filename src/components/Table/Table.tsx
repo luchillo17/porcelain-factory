@@ -4,7 +4,7 @@ import { Table, Panel } from 'react-bootstrap';
 import { map, at } from 'lodash';
 
 interface TableProps<T> {
-  fields: Field[];
+  fields: TableField[];
   items: {
     [key: string]: T,
   };
