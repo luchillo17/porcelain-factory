@@ -32,11 +32,14 @@ ReactDOM.render(
           {/*<Route path="/" component={} />
           <Route path="/" component={} />*/}
           <Route path="/inventories" component={Inventories} />
+
           <Route path="/products/new" component={Product} />
           <Route path="/products/:id" component={Product} />
           <Route path="/products" component={Products} />
+
+          <Route path="/orders/new" component={Order} />
+          <Route path="/orders/:id" component={Order} />
           <Route path="/orders" component={Orders} />
-          <Route path="/order/:id" component={Order} />
           <Route path="/" exact={true} component={Products} />
         </Switch>
       </div>
