@@ -5,8 +5,8 @@ import { Action } from 'redux';
 import { Field, reduxForm, FormComponentProps } from 'redux-form';
 import {
   Jumbotron,
+  Button,
   Panel,
-  // Button
 } from 'react-bootstrap';
 
 import {v1 as uuid} from 'uuid';
@@ -34,16 +34,20 @@ class ProductPage extends React.Component<ProductProps, any> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  public handleSubmit(values: Product) {
+  public handleSubmit({price: priceString, ...values}: Product) {
     const product = this.props.product;
-    const price = parseFloat(values.price as any);
+    const price = parseFloat(priceString as any);
 
-    Object.assign(product, values, { price });
-    this.props.setProduct(product);
+    this.props.setProduct({
+      ...product,
+      ...values,
+      price,
+    });
     this.props.history.push('/products');
   }
 
   public render(): JSX.Element {
+    // Bug in redux-form typings, track at https://github.com/DefinitelyTyped/DefinitelyTyped/issues/16856
     const handleSubmit = (this.props as any).handleSubmit;
     return (
       <Jumbotron>
@@ -91,7 +95,7 @@ class ProductPage extends React.Component<ProductProps, any> {
                 componentClass="textarea"
                 component={FormInput}
               />
-              <button type="submit">Guardar</button>
+              <Button type="submit">Guardar</Button>
             </form>
           </Panel>
         </div>
