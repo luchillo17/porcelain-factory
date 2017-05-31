@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { connect, MapStateToProps } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Action } from 'redux';
 import { Field, reduxForm, FormComponentProps } from 'redux-form';
 import {
@@ -15,8 +16,10 @@ import { FormInput, CustomTable } from '../../components';
 import { filteredOrderItemsByOrder } from '../../selectors';
 import { setOrder } from '../../actions';
 
+import { Validators } from '../../utils/';
+import { SearchInput } from '..';
+
 import './Order.css';
-import { Validators } from '../../utils/index';
 
 interface OrderProps extends FormComponentProps, RouteComponentProps<any> {
   order: Order;
@@ -125,6 +128,12 @@ class OrderPage extends React.Component<OrderProps, OrderState> {
             <div>
               <Panel>
                 <h1>Lineas</h1>
+              </Panel>
+              <Panel className="utility-toolbar">
+                <LinkContainer to={`/orders/${this.state.id}/orderItems/new`}>
+                  <Button>Nuevo inventario</Button>
+                </LinkContainer>
+                <SearchInput />
               </Panel>
               <OrderItemTable
                 fields={this.state.fields}

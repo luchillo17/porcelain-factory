@@ -96,7 +96,7 @@ class InventoryPage extends React.Component<InventoryProps, any> {
                 validate={[
                   Validators.required,
                   Validators.number,
-                  Validators.minValueInclusive(0),
+                  Validators.minValueExclusive(0),
                 ]}
               />
               <div className="formButtons">

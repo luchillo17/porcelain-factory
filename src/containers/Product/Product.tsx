@@ -86,7 +86,7 @@ class ProductPage extends React.Component<ProductProps, any> {
                 validate={[
                   Validators.required,
                   Validators.number,
-                  Validators.minValueInclusive(0),
+                  Validators.minValueExclusive(0),
                 ]}
               />
               <Field

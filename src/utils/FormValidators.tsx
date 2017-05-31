@@ -11,7 +11,7 @@ export class Validators {
     return (value) => value && value < min ? `Valor debe ser mayor o igual a ${min}.` : undefined;
   }
 
-  public static minValueInclusive(min: number) {
+  public static minValueExclusive(min: number) {
     return (value) => value && value <= min ? `Valor debe ser mayor a ${min}.` : undefined;
   }
 
@@ -19,7 +19,7 @@ export class Validators {
     return (value) => value && value > max ? `Valor debe ser menor o igual a ${max}.` : undefined;
   }
 
-  public static maxValueInclusive(max: number) {
+  public static maxValueExclusive(max: number) {
     return (value) => value && value >= max ? `Valor debe ser menor a ${max}.` : undefined;
   }
 

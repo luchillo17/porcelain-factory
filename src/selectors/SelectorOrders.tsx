@@ -15,7 +15,7 @@ export const filteredOrders = createSelector(
   (products, orders, orderItems, searchTerm) => {
     orders = mapValues(orders, (order) => {
 
-      let { quantity, total } = reduce(
+      const { quantity, total } = reduce(
         getOrderItemsByOrder(order, orderItems),
         (acum, orderItem) => {
           acum.quantity += orderItem.quantity;
@@ -39,11 +39,11 @@ export const filteredOrders = createSelector(
     }
 
     return mapKeys(
-      filter(orders, (inventory) => (
-        lowerCase(inventory.id).includes(searchTerm) ||
-        lowerCase(inventory.customer).includes(searchTerm) ||
-        lowerCase(inventory.address).includes(searchTerm) ||
-        lowerCase(inventory.address).includes(searchTerm)
+      filter(orders, (order) => (
+        lowerCase(order.id).includes(searchTerm) ||
+        lowerCase(order.customer).includes(searchTerm) ||
+        lowerCase(order.address).includes(searchTerm) ||
+        lowerCase(order.address).includes(searchTerm)
       )),
       'id'
     );
@@ -51,17 +51,28 @@ export const filteredOrders = createSelector(
 );
 
 export const filteredOrderItemsByOrder = (order: Order) => createSelector(
-  [getProducts, getOrderItems],
-  (products, orderItems) => {
-    const filteredOrderItems = getOrderItemsByOrder(order, orderItems);
+  [getProducts, getOrderItems, getSearchTerm],
+  (products, orderItems, searchTerm) => {
+    let filteredOrderItems = getOrderItemsByOrder(order, orderItems);
+    filteredOrderItems = map(filteredOrderItems, (orderItem) => ({
+      ...orderItem,
+      product: products[orderItem.productId],
+    } as OrderItem));
 
-    return mapKeys<OrderItem>(
+    if (
+      !searchTerm ||
+      searchTerm === ''
+    ) {
+      return mapKeys(filteredOrderItems, 'id');
+    }
 
-      map(filteredOrderItems, (orderItem) => ({
-        ...orderItem,
-        product: products[orderItem.productId],
-      } as OrderItem)),
+    filteredOrderItems = filter(filteredOrderItems, (orderItem) =>
+      lowerCase(orderItem.id).includes(searchTerm) ||
+      lowerCase(orderItem.product && orderItem.product.name).includes(searchTerm)
+    );
 
+    return mapKeys(
+      filteredOrderItems,
       'id',
     );
   }
