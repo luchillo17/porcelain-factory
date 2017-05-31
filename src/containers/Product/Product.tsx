@@ -40,6 +40,7 @@ class ProductPage extends React.Component<ProductProps, any> {
 
     Object.assign(product, values, { price });
     this.props.setProduct(product);
+    this.props.history.push('/products');
   }
 
   public render(): JSX.Element {
