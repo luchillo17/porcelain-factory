@@ -9,56 +9,63 @@ import {
   Panel,
 } from 'react-bootstrap';
 
-import { map } from 'lodash';
-import {v1 as uuid} from 'uuid';
+import { map, omit } from 'lodash';
+import { v1 as uuid } from 'uuid';
 
-import { FormInput } from '../../components/index';
-import { setInventory } from '../../actions';
+import { FormInput } from '../../components';
+// import { filteredOrderItemsByOrder } from '../../selectors';
+import { setOrderItem } from '../../actions';
 
-import './Inventory.css';
+import './OrderItem.css';
 import { Validators } from '../../utils/index';
 
-interface InventoryProps extends FormComponentProps, RouteComponentProps<any> {
+interface OrderItemProps extends FormComponentProps, RouteComponentProps<any> {
+  order: Order;
   products: Products;
-  inventory: Inventory;
-  setInventory: (inventory: Inventory) => Action;
+  orderItem: OrderItem;
+  setOrderItem: (orderItem: OrderItem) => Action;
 }
 
-class InventoryPage extends React.Component<InventoryProps, any> {
+interface OrderItemState {
+  id: string;
+  isNew: boolean;
+}
 
-  constructor(props: InventoryProps) {
+class OrderItemPage extends React.Component<OrderItemProps, OrderItemState> {
+
+  constructor(props: OrderItemProps) {
     super(props);
 
     this.state = {
-      isNew: !this.props.match.params.id
+      id: this.props.match.params.id,
+      isNew: !this.props.match.params.id,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  public handleSubmit({...values}: Inventory) {
-    const inventory = this.props.inventory;
+  public handleSubmit({ ...values }: OrderItem) {
+    const orderItem = this.props.orderItem;
 
-    this.props.setInventory({
-      ...inventory,
-      ...values,
-    });
-    this.props.history.push('/inventories');
+    this.props.setOrderItem(
+      omit(
+      {
+        ...orderItem,
+        ...values,
+      },
+      'customer') as OrderItem
+    );
+    this.props.history.push(`/orders/${orderItem.orderId}`);
   }
 
   public render(): JSX.Element {
     const handleSubmit = this.props.handleSubmit;
-
-    const {
-      products,
-      // inventory: { productId },
-    } = this.props;
-
+    const products = this.props.products;
     return (
       <Jumbotron>
-        <div className="Inventory">
+        <div className="Order">
           <Panel>
-            <h1>{this.state.isNew ? 'Nuevo ' : ''}Inventario</h1>
+            <h1>{this.state.isNew ? 'Nueva ' : ''}Linea de Orden</h1>
           </Panel>
           <Panel>
             <form onSubmit={handleSubmit(this.handleSubmit)}>
@@ -66,6 +73,20 @@ class InventoryPage extends React.Component<InventoryProps, any> {
                 name="id"
                 type="text"
                 label="Id"
+                readOnly={true}
+                component={FormInput}
+              />
+              <Field
+                name="orderId"
+                type="text"
+                label="Id Orden"
+                readOnly={true}
+                component={FormInput}
+              />
+              <Field
+                name="customer"
+                type="text"
+                label="Cliente"
                 readOnly={true}
                 component={FormInput}
               />
@@ -97,15 +118,16 @@ class InventoryPage extends React.Component<InventoryProps, any> {
                 validate={[
                   Validators.required,
                   Validators.number,
-                  Validators.minValueExclusive(0),
+                  Validators.minValueExclusive(0)
                 ]}
               />
+
               <div className="formButtons">
                 <Button bsStyle="primary" type="submit">Guardar</Button>
                 {' '}
                 <Button
                   bsStyle="danger"
-                  onClick={() => this.props.history.push('/inventories')}
+                  onClick={() => this.props.history.push('/orders')}
                 >
                   Cancelar
                 </Button>
@@ -118,33 +140,40 @@ class InventoryPage extends React.Component<InventoryProps, any> {
   }
 }
 
-const InventoryFormWrapper = reduxForm({
-  form: 'inventory',
-})(InventoryPage);
+const OrderItemFormWrapper = reduxForm({
+  form: 'order',
+})(OrderItemPage);
 
 interface MapStateResult {
-  inventory: Inventory;
+  order: Order;
   products: Products;
+  orderItem: OrderItem;
 }
 
 type StateToProps = MapStateToProps<MapStateResult, RouteComponentProps<any>>;
 
 const mapStateToProps: StateToProps =
-  ({ inventories, products }: RXState, ownProps) => {
-    const inventoryId = ownProps && ownProps.match.params.id;
-    const inventory = inventoryId ? inventories[inventoryId] : { id: uuid() } as Inventory;
+  ({ orders, products, orderItems }: RXState, ownProps) => {
+    const id = ownProps && ownProps.match.params.id;
+    const orderId = ownProps && ownProps.match.params.orderId;
+
+    const order = orders[ orderId ];
+    const orderItem = id ? orderItems[ id ] : { id: uuid(), order, orderId } as OrderItem;
+
     return {
+      order,
       products,
-      inventory,
+      orderItem,
       initialValues: {
-        ...inventory,
+        customer: order.customer,
+        ...orderItem,
       }
     };
   };
 
 const mapDispatchToProps = {
-  setInventory,
+  setOrderItem,
 };
 
-export const Inventory: React.ComponentClass<any> =
-  connect(mapStateToProps, mapDispatchToProps)(InventoryFormWrapper);
+export const OrderItem: React.ComponentClass<any> =
+  connect(mapStateToProps, mapDispatchToProps)(OrderItemFormWrapper);
