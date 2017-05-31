@@ -66,5 +66,6 @@ interface OrderItem {
   productId: string;
   quantity: number;
 
+  order?: Order;
   product?: Product;
 }
