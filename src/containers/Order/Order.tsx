@@ -77,7 +77,16 @@ class OrderPage extends React.Component<OrderProps, any> {
                 validate={[Validators.required, Validators.minLength3]}
               />
 
-              <Button type="submit">Guardar</Button>
+              <div className="formButtons">
+                <Button bsStyle="primary" type="submit">Guardar</Button>
+                {' '}
+                <Button
+                  bsStyle="danger"
+                  onClick={() => this.props.history.push('/orders')}
+                >
+                  Cancelar
+                </Button>
+              </div>
             </form>
           </Panel>
         </div>
@@ -87,13 +96,13 @@ class OrderPage extends React.Component<OrderProps, any> {
 }
 
 const OrderFormWrapper = reduxForm({
-  form: 'product',
+  form: 'order',
 })(OrderPage);
 
 const mapStateToProps: MapStateToProps<{order: Order}, RouteComponentProps<any>> =
   ({ orders }: {orders: Orders}, ownProps) => {
-    let orderId = ownProps && ownProps.match.params.id;
-    let order = orderId ? orders[orderId] : { id: uuid() } as Order;
+    const orderId = ownProps && ownProps.match.params.id;
+    const order = orderId ? orders[orderId] : { id: uuid() } as Order;
     return {
       order,
       initialValues: {

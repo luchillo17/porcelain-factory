@@ -95,7 +95,16 @@ class ProductPage extends React.Component<ProductProps, any> {
                 componentClass="textarea"
                 component={FormInput}
               />
-              <Button type="submit">Guardar</Button>
+              <div className="formButtons">
+                <Button bsStyle="primary" type="submit">Guardar</Button>
+                {' '}
+                <Button
+                  bsStyle="danger"
+                  onClick={() => this.props.history.push('/products')}
+                >
+                  Cancelar
+                </Button>
+              </div>
             </form>
           </Panel>
         </div>
@@ -110,8 +119,8 @@ const ProductFormWrapper = reduxForm({
 
 const mapStateToProps: MapStateToProps<{product: Product}, RouteComponentProps<any>> =
   ({ products }: {products: Products}, ownProps) => {
-    let productId = ownProps && ownProps.match.params.id;
-    let product = productId ? products[productId] : { id: uuid() } as Product;
+    const productId = ownProps && ownProps.match.params.id;
+    const product = productId ? products[productId] : { id: uuid() } as Product;
     return {
       product,
       initialValues: {
