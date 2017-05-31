@@ -48,7 +48,7 @@ class ProductPage extends React.Component<ProductProps, any> {
 
   public render(): JSX.Element {
     // Bug in redux-form typings, track at https://github.com/DefinitelyTyped/DefinitelyTyped/issues/16856
-    const handleSubmit = (this.props as any).handleSubmit;
+    const handleSubmit = this.props.handleSubmit;
     return (
       <Jumbotron>
         <div className="Product">
