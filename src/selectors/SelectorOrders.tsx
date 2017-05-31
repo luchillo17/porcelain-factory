@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { filter, mapKeys, mapValues, reduce, lowerCase } from 'lodash';
+import { filter, map, mapKeys, mapValues, reduce, lowerCase } from 'lodash';
 
 const getProducts = (state: RXState) => state.products;
 
@@ -46,6 +46,23 @@ export const filteredOrders = createSelector(
         lowerCase(inventory.address).includes(searchTerm)
       )),
       'id'
+    );
+  }
+);
+
+export const filteredOrderItemsByOrder = (order: Order) => createSelector(
+  [getProducts, getOrderItems],
+  (products, orderItems) => {
+    const filteredOrderItems = getOrderItemsByOrder(order, orderItems);
+
+    return mapKeys<OrderItem>(
+
+      map(filteredOrderItems, (orderItem) => ({
+        ...orderItem,
+        product: products[orderItem.productId],
+      } as OrderItem)),
+
+      'id',
     );
   }
 );

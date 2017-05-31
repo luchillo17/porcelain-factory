@@ -9,11 +9,10 @@ import {
   Panel,
 } from 'react-bootstrap';
 
-import { mapKeys } from 'lodash';
 import {v1 as uuid} from 'uuid';
 
 import { FormInput, CustomTable } from '../../components';
-import { getOrderItemsByOrder } from '../../selectors';
+import { filteredOrderItemsByOrder } from '../../selectors';
 import { setOrder } from '../../actions';
 
 import './Order.css';
@@ -21,7 +20,7 @@ import { Validators } from '../../utils/index';
 
 interface OrderProps extends FormComponentProps, RouteComponentProps<any> {
   order: Order;
-  orderItems: OrderItem[];
+  orderItems: OrderItems;
   setOrder: (order: Order) => Action;
 }
 
@@ -45,8 +44,8 @@ class OrderPage extends React.Component<OrderProps, OrderState> {
           label: 'Id',
         },
         {
-          key: 'productId',
-          label: 'Id producto',
+          key: 'product.name',
+          label: 'Nombre Producto',
         },
         {
           key: 'quantity',
@@ -123,11 +122,16 @@ class OrderPage extends React.Component<OrderProps, OrderState> {
           </Panel>
           {
             OrderItemTable &&
-            <OrderItemTable
-              fields={this.state.fields}
-              items={mapKeys(this.props.orderItems, 'id')}
-              itemClick={this.handleClick}
-            />
+            <div>
+              <Panel>
+                <h1>Lineas</h1>
+              </Panel>
+              <OrderItemTable
+                fields={this.state.fields}
+                items={this.props.orderItems}
+                itemClick={this.handleClick}
+              />
+            </div>
           }
         </div>
       </Jumbotron>
@@ -141,19 +145,22 @@ const OrderFormWrapper = reduxForm({
 
 interface MapStateResult {
   order: Order;
-  orderItems: OrderItem[];
+  orderItems: OrderItems;
 }
 
 type StateToProps = MapStateToProps<MapStateResult, RouteComponentProps<any>>;
 
 const mapStateToProps: StateToProps =
-  ({ orders, orderItems }: RXState, ownProps) => {
+  (state: RXState, ownProps) => {
+    const { orders } = state;
     const orderId = ownProps && ownProps.match.params.id;
     const order = orderId ? orders[orderId] : { id: uuid() } as Order;
 
+    const filter = filteredOrderItemsByOrder({id: orderId} as Order);
+
     return {
       order,
-      orderItems: getOrderItemsByOrder({id: orderId} as Order, orderItems),
+      orderItems: filter(state),
       initialValues: {
         ...order,
       }
