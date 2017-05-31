@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { Jumbotron, Panel } from 'react-bootstrap';
+import { Jumbotron, Panel, Button } from 'react-bootstrap';
 
-import { SearchBar } from '..';
+import { SearchInput } from '..';
 import { CustomTable } from '../../components';
 import { filteredInventories } from '../../selectors';
+import { LinkContainer } from 'react-router-bootstrap';
 
 interface InventoriesProps extends RouteComponentProps<any> {
   inventories: Inventories;
@@ -41,6 +42,11 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
       ]  as Field[],
     });
 
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  public handleClick(key: string) {
+    this.props.history.push(`/inventories/${key}`);
   }
 
   public render(): JSX.Element {
@@ -51,10 +57,16 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
           <Panel>
             <h1>Inventario</h1>
           </Panel>
-          <SearchBar />
+          <Panel className="utility-toolbar">
+            <LinkContainer to="/orders/new">
+              <Button>Nuevo inventario</Button>
+            </LinkContainer>
+            <SearchInput />
+          </Panel>
           <InventoryTable
             fields={this.state.fields}
             items={this.props.inventories}
+            itemClick={this.handleClick}
           />
         </div>
       </Jumbotron>

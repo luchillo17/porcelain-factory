@@ -3,6 +3,14 @@ import { omit } from 'lodash';
 
 import { SET_PRODUCT, DELETE_PRODUCT } from '../actions';
 
+const defaultProductState: Product = {
+  id: '0',
+  name: '',
+  type: '',
+  price: 0,
+  considerations: '',
+};
+
 const productsInitialState: Products = {
   0: {
     id: '0',
@@ -24,7 +32,7 @@ export const ProductsReducer: MyReducer<Products> =
   (state = productsInitialState, action) => {
     switch (action.type) {
       case SET_PRODUCT:
-        const product = action.payload;
+        const product = Object.assign({}, defaultProductState, action.payload) as Product;
         return { ...state, [product.id]: product };
 
       case DELETE_PRODUCT:

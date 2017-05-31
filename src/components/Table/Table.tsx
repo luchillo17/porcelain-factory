@@ -8,6 +8,7 @@ interface TableProps<T> {
   items: {
     [key: string]: T,
   };
+  itemClick?: (key: string) => void;
 }
 
 interface TableState {}
@@ -23,12 +24,22 @@ export class CustomTable<T> extends React.Component<TableProps<T>, TableState> {
   public renderItems() {
     return map(
       this.props.items,
-      (item) => (
-        <tr key={(item as any).id}>
-          {this.renderItem(item)}
-        </tr>
-      )
+      (item) => {
+        let key = (item as any).id;
+        return (
+          <tr onClick={() => this.handleItemClick(key)} key={key}>
+            {this.renderItem(item)}
+          </tr>
+        );
+      }
     );
+  }
+
+  public handleItemClick(key: string) {
+    if (!this.props.itemClick) {
+      return;
+    }
+    this.props.itemClick(key);
   }
 
   public renderItem(item: T) {
