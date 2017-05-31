@@ -78,6 +78,7 @@ class InventoryPage extends React.Component<InventoryProps, any> {
                 validate={Validators.required}
                 component={FormInput}
               >
+                <option key="-1" value="" />
                 {
                   map(products, product => {
                     return (

@@ -99,6 +99,7 @@ class OrderItemPage extends React.Component<OrderItemProps, OrderItemState> {
                 validate={Validators.required}
                 component={FormInput}
               >
+                <option key="-1" value="" />
                 {
                   map(products, product => {
                     return (
