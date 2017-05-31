@@ -41,7 +41,7 @@ class OrderPage extends React.Component<OrderProps, any> {
       ...order,
       ...values,
     });
-    this.props.history.push('/orders');
+    this.props.history.push(`/orders/${values.id}`);
   }
 
   public render(): JSX.Element {
