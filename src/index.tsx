@@ -14,6 +14,7 @@ import {
   Orders,
   Product,
   Products,
+  Inventory,
   Inventories,
 } from './containers';
 import { reducers } from './reducers';
@@ -31,6 +32,8 @@ ReactDOM.render(
         <Switch>
           {/*<Route path="/" component={} />
           <Route path="/" component={} />*/}
+          <Route path="/inventories/new" component={Inventory} />
+          <Route path="/inventories/:id" component={Inventory} />
           <Route path="/inventories" component={Inventories} />
 
           <Route path="/products/new" component={Product} />

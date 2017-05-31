@@ -58,7 +58,7 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
             <h1>Inventario</h1>
           </Panel>
           <Panel className="utility-toolbar">
-            <LinkContainer to="/orders/new">
+            <LinkContainer to="/inventories/new">
               <Button>Nuevo inventario</Button>
             </LinkContainer>
             <SearchInput />

@@ -39,16 +39,18 @@ body {
   }
 }
 
-.Product, .Order {
-  form .input-group {
-    width: 100%;
-    .input-group-addon {
+.Product, .Inventory, .Order {
+  form {
+    .input-group {
+      width: 100%;
+      .input-group-addon {
 
-      height: 34px;
-      text-align: left;
-
-      + * {
         height: 34px;
+        text-align: left;
+
+        + * {
+          height: 34px;
+        }
       }
     }
   }

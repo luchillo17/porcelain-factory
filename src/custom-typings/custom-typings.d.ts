@@ -8,6 +8,14 @@ interface RXState {
   searchTerm: string;
 }
 
+// Form specific
+
+// Table specific
+interface Field {
+  label: string;
+  key: string;
+}
+
 // Products
 interface Products {
   [key: string]: Product;
@@ -59,10 +67,4 @@ interface OrderItem {
   quantity: number;
 
   product?: Product;
-}
-
-// Table specific
-interface Field {
-  label: string;
-  key: string
 }
