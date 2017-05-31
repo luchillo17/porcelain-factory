@@ -12,6 +12,7 @@ import { App } from './components';
 import {
   Order,
   Orders,
+  Product,
   Products,
   Inventories,
 } from './containers';
@@ -31,6 +32,8 @@ ReactDOM.render(
           {/*<Route path="/" component={} />
           <Route path="/" component={} />*/}
           <Route path="/inventories" component={Inventories} />
+          <Route path="/products/new" component={Product} />
+          <Route path="/products/:id" component={Product} />
           <Route path="/products" component={Products} />
           <Route path="/orders" component={Orders} />
           <Route path="/order/:id" component={Order} />

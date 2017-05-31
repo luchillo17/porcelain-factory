@@ -1,17 +1,16 @@
-import { ActionCreator } from 'redux';
 import { Action } from 'redux';
 
 export const SET_PRODUCT = 'SET_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
-export const setProduct: ActionCreator<Action> =
-  (payload: Product) => ({
+export const setProduct =
+  (payload: Product): Action => ({
     type: SET_PRODUCT,
     payload,
   });
 
-export const deleteProduct: ActionCreator<Action> =
-  (payload: string) => ({
+export const deleteProduct =
+  (payload: string): Action => ({
     type: DELETE_PRODUCT,
     payload,
   });

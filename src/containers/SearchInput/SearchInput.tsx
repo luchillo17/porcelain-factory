@@ -10,24 +10,23 @@ import {
   FormGroup,
   FormControl,
   InputGroup,
-  Panel,
 } from 'react-bootstrap';
 import { debounce } from 'lodash';
 
 import { searchByTerm } from '../../actions';
 
-interface SearchBarProps {
+interface SearchInputProps {
   searchByTerm: ActionCreator<Action>;
 }
 
-interface SearchBarState {
+interface SearchInputState {
 
 }
 
 type FormControlEvent = FormEvent<Component<FormGroup, {}>>;
 
-export class SearchBarComponent extends React.Component<SearchBarProps, SearchBarState> {
-  constructor(props: SearchBarProps) {
+export class SearchInputComponent extends React.Component<SearchInputProps, SearchInputState> {
+  constructor(props: SearchInputProps) {
     super(props);
 
     this.props.searchByTerm('');
@@ -48,28 +47,26 @@ export class SearchBarComponent extends React.Component<SearchBarProps, SearchBa
 
   public render(): JSX.Element {
     return (
-      <Panel>
-        <Form inline={true}>
-          <FormGroup
-            controlId="formBasicText"
-          >
-            <InputGroup>
-              <InputGroup.Addon>Buscar: </InputGroup.Addon>
-              <FormControl
-                type="text"
-                placeholder="Enter text"
-                onChange={this.onChange}
-              />
-            </InputGroup>
-            <FormControl.Feedback />
-          </FormGroup>
-        </Form>
-      </Panel>
+      <Form inline={true}>
+        <FormGroup
+          controlId="formBasicText"
+        >
+          <InputGroup>
+            <InputGroup.Addon>Buscar: </InputGroup.Addon>
+            <FormControl
+              type="text"
+              placeholder="Enter text"
+              onChange={this.onChange}
+            />
+          </InputGroup>
+          <FormControl.Feedback />
+        </FormGroup>
+      </Form>
     );
   }
 }
 
-const mapStateToProps = ({ searchTerm }) => ({
+const mapStateToProps = () => ({
 
 });
 
@@ -77,5 +74,5 @@ const mapDispatchToProps = {
   searchByTerm,
 };
 
-export const SearchBar: React.ComponentClass<any> =
-  connect(mapStateToProps, mapDispatchToProps)(SearchBarComponent);
+export const SearchInput: React.ComponentClass<any> =
+  connect(mapStateToProps, mapDispatchToProps)(SearchInputComponent);

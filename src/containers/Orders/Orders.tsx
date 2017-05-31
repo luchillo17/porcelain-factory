@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { connect, MapStateToProps } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { Jumbotron, Panel } from 'react-bootstrap';
+import { Jumbotron, Panel, Button } from 'react-bootstrap';
 
-import { SearchBar } from '..';
+import { SearchInput } from '..';
 import { CustomTable } from '../../components';
 import { filteredOrders } from '../../selectors';
+import { LinkContainer } from 'react-router-bootstrap';
 
 interface OrdersProps extends RouteComponentProps<any> {
   orders: Orders;
@@ -41,6 +42,11 @@ class OrdersPage extends React.Component<OrdersProps, any> {
       ]  as Field[],
     });
 
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  public handleClick(key: string) {
+    this.props.history.push(`/orders/${key}`);
   }
 
   public render(): JSX.Element {
@@ -51,10 +57,16 @@ class OrdersPage extends React.Component<OrdersProps, any> {
           <Panel>
             <h1>Ordenes</h1>
           </Panel>
-          <SearchBar />
+          <Panel className="utility-toolbar">
+            <LinkContainer to="/orders/new">
+              <Button>Nueva orden</Button>
+            </LinkContainer>
+            <SearchInput />
+          </Panel>
           <OrderTable
             fields={this.state.fields}
             items={this.props.orders}
+            itemClick={this.handleClick}
           />
         </div>
       </Jumbotron>

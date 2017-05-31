@@ -10,7 +10,6 @@ const getSearchTerm = (state: RXState) => lowerCase(state.searchTerm);
 const getOrderItemByOrder = (order: Order, orderItems: OrderItems) =>
   filter(orderItems, (orderItem) => order.id === orderItem.orderId);
 
-
 export const filteredOrders = createSelector(
   [getProducts, getOrders, getOrderItems, getSearchTerm],
   (products, orders, orderItems, searchTerm) => {
