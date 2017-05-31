@@ -7,9 +7,10 @@ import {
   Jumbotron,
   Button,
   Panel,
+  HelpBlock,
 } from 'react-bootstrap';
 
-import { map, omit } from 'lodash';
+import { map, reduce, omit } from 'lodash';
 import { v1 as uuid } from 'uuid';
 
 import { FormInput } from '../../components';
@@ -44,7 +45,7 @@ class OrderItemPage extends React.Component<OrderItemProps, OrderItemState> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  public handleSubmit({ ...values }: OrderItem) {
+  public handleSubmit({ quantity, ...values }: OrderItem) {
     const orderItem = this.props.orderItem;
 
     this.props.setOrderItem(
@@ -52,15 +53,20 @@ class OrderItemPage extends React.Component<OrderItemProps, OrderItemState> {
       {
         ...orderItem,
         ...values,
+        quantity: parseFloat(quantity as any),
       },
-      'customer') as OrderItem
+      ['customer', 'available']) as OrderItem
     );
     this.props.history.push(`/orders/${orderItem.orderId}`);
   }
 
   public render(): JSX.Element {
-    const handleSubmit = this.props.handleSubmit;
-    const products = this.props.products;
+    const {
+      handleSubmit,
+      orderItem,
+      products,
+    } = this.props;
+
     return (
       <Jumbotron>
         <div className="Order">
@@ -111,6 +117,13 @@ class OrderItemPage extends React.Component<OrderItemProps, OrderItemState> {
                 }
               </Field>
               <Field
+                name="available"
+                type="number"
+                label="Disponibles"
+                readOnly={true}
+                component={FormInput}
+              />
+              <Field
                 name="quantity"
                 type="number"
                 label="Cantidad"
@@ -121,6 +134,15 @@ class OrderItemPage extends React.Component<OrderItemProps, OrderItemState> {
                   Validators.minValueExclusive(0)
                 ]}
               />
+              {
+                orderItem.available &&
+                orderItem.available < orderItem.quantity &&
+                <HelpBlock>
+                  {orderItem.quantity - orderItem.available} productos se enviaran
+                  a producción.
+                </HelpBlock>
+
+              }
 
               <div className="formButtons">
                 <Button bsStyle="primary" type="submit">Guardar</Button>
@@ -153,12 +175,25 @@ interface MapStateResult {
 type StateToProps = MapStateToProps<MapStateResult, RouteComponentProps<any>>;
 
 const mapStateToProps: StateToProps =
-  ({ orders, products, orderItems }: RXState, ownProps) => {
+  ({ orders, products, orderItems, inventories }: RXState, ownProps) => {
     const id = ownProps && ownProps.match.params.id;
     const orderId = ownProps && ownProps.match.params.orderId;
 
     const order = orders[ orderId ];
     const orderItem = id ? orderItems[ id ] : { id: uuid(), order, orderId } as OrderItem;
+
+    const quantity = inventories[orderItem.productId].quantity;
+    const filteredItems = omit<OrderItems, OrderItems>(orderItems, orderItem.id);
+    orderItem.available = quantity - reduce(
+      filteredItems,
+      (sum, item) => {
+        return sum +
+          (item.productId === orderItem.productId ?
+            item.quantity :
+            0);
+      },
+      0,
+    );
 
     return {
       order,

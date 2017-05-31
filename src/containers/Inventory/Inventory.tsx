@@ -36,12 +36,13 @@ class InventoryPage extends React.Component<InventoryProps, any> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  public handleSubmit({...values}: Inventory) {
+  public handleSubmit({quantity, ...values}: Inventory) {
     const inventory = this.props.inventory;
 
     this.props.setInventory({
       ...inventory,
       ...values,
+      quantity: parseFloat(quantity as any),
     });
     this.props.history.push('/inventories');
   }
