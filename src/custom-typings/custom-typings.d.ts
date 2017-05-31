@@ -68,4 +68,5 @@ interface OrderItem {
 
   order?: Order;
   product?: Product;
+  available?: number;
 }
