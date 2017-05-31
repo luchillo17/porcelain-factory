@@ -7,7 +7,7 @@ const getOrders = (state: RXState) => state.orders;
 const getOrderItems = (state: RXState) => state.orderItems;
 const getSearchTerm = (state: RXState) => lowerCase(state.searchTerm);
 
-const getOrderItemByOrder = (order: Order, orderItems: OrderItems) =>
+export const getOrderItemsByOrder = (order: Order, orderItems: OrderItems) =>
   filter(orderItems, (orderItem) => order.id === orderItem.orderId);
 
 export const filteredOrders = createSelector(
@@ -16,7 +16,7 @@ export const filteredOrders = createSelector(
     orders = mapValues(orders, (order) => {
 
       let { quantity, total } = reduce(
-        getOrderItemByOrder(order, orderItems),
+        getOrderItemsByOrder(order, orderItems),
         (acum, orderItem) => {
           acum.quantity += orderItem.quantity;
           acum.total += orderItem.quantity * products[orderItem.orderId].price;

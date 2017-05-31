@@ -35,7 +35,7 @@ class ProductsPage extends React.Component<ProductProps, any> {
           key: 'price',
           label: 'Precio',
         },
-      ]  as Field[],
+      ]  as TableField[],
     });
 
     this.handleClick = this.handleClick.bind(this);
@@ -46,7 +46,7 @@ class ProductsPage extends React.Component<ProductProps, any> {
   }
 
   public render(): JSX.Element {
-    let ProductTable = CustomTable as new () => CustomTable<Product>;
+    const ProductTable = CustomTable as new () => CustomTable<Product>;
     return (
       <Jumbotron>
         <div className="Products">

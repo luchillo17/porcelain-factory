@@ -39,7 +39,7 @@ class OrdersPage extends React.Component<OrdersProps, any> {
           key: 'total',
           label: 'Total',
         },
-      ]  as Field[],
+      ]  as TableField[],
     });
 
     this.handleClick = this.handleClick.bind(this);
@@ -50,7 +50,7 @@ class OrdersPage extends React.Component<OrdersProps, any> {
   }
 
   public render(): JSX.Element {
-    let OrderTable = CustomTable as new () => CustomTable<Order>;
+    const OrderTable = CustomTable as new () => CustomTable<Order>;
     return (
       <Jumbotron>
         <div className="Orders">

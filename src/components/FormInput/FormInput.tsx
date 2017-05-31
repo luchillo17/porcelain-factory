@@ -33,8 +33,6 @@ export class FormInput extends React.Component<FormInputProps, FormInputState> {
       ( warning && 'warning' ) ||
       undefined;
 
-    let {
-    } = this.props;
     return (
       <FormGroup
         controlId={name}

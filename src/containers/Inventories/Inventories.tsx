@@ -39,7 +39,7 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
           key: 'reserved',
           label: 'Reservado',
         },
-      ]  as Field[],
+      ]  as TableField[],
     });
 
     this.handleClick = this.handleClick.bind(this);
@@ -50,7 +50,7 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
   }
 
   public render(): JSX.Element {
-    let InventoryTable = CustomTable as new () => CustomTable<Inventory>;
+    const InventoryTable = CustomTable as new () => CustomTable<Inventory>;
     return (
       <Jumbotron>
         <div className="Inventories">
@@ -58,7 +58,7 @@ class InventoriesPage extends React.Component<InventoriesProps, any> {
             <h1>Inventario</h1>
           </Panel>
           <Panel className="utility-toolbar">
-            <LinkContainer to="/orders/new">
+            <LinkContainer to="/inventories/new">
               <Button>Nuevo inventario</Button>
             </LinkContainer>
             <SearchInput />
