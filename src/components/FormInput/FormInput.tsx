@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
+import { FormGroup, InputGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import {
   WrappedFieldProps,
 } from 'redux-form';
@@ -52,6 +52,10 @@ export class FormInput extends React.Component<FormInputProps, FormInputState> {
           />
         </InputGroup>
         <FormControl.Feedback />
+        {
+          validationState &&
+          <HelpBlock>{error || warning}</HelpBlock>
+        }
       </FormGroup>
     );
   }

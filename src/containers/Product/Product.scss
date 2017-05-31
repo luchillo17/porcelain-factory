@@ -1,5 +1,13 @@
 .Product {
-  form .input-group-addon {
-    width: 130px;
+  form .input-group {
+    width: 100%;
+    .input-group-addon {
+      width: 130px;
+      height: 34px;
+
+      + * {
+        height: 34px;
+      }
+    }
   }
 }
