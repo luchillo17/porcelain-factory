@@ -69,9 +69,9 @@ class OrderPage extends React.Component<OrderProps, OrderState> {
       ...values,
     });
 
-    setInterval(() => {
+    setTimeout(() => {
       this.props.history.push(`/orders/${values.id}`);
-    },          100);
+    });
   }
 
   public handleClick(key: string) {
