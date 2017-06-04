@@ -22,16 +22,18 @@ import { SearchInput } from '..';
 import './Order.css';
 
 interface OrderProps extends FormComponentProps, RouteComponentProps<any> {
+  id: string;
+  isNew: boolean;
   order: Order;
   orderItems: OrderItems;
   setOrder: (order: Order) => Action;
 }
 
 interface OrderState {
-  id: string;
-  isNew: boolean;
   fields: TableField[];
 }
+
+const OrderItemTable = CustomTable as new () => CustomTable<OrderItem>;
 
 class OrderPage extends React.Component<OrderProps, OrderState> {
 
@@ -39,8 +41,6 @@ class OrderPage extends React.Component<OrderProps, OrderState> {
     super(props);
 
     this.state = {
-      id: this.props.match.params.id,
-      isNew: !this.props.match.params.id,
       fields: [
         {
           key: 'id',
@@ -68,27 +68,32 @@ class OrderPage extends React.Component<OrderProps, OrderState> {
       ...order,
       ...values,
     });
-    this.props.history.push(`/orders/${values.id}`);
+
+    setTimeout(() => {
+      this.props.history.push(`/orders/${values.id}`);
+    });
   }
 
   public handleClick(key: string) {
-    if (this.state.isNew) { return; }
-    this.props.history.push(`/orders/${this.state.id}/orderItems/${key}`);
+    if (this.props.isNew) { return; }
+    this.props.history.push(`/orders/${this.props.id}/orderItems/${key}`);
   }
 
+  // public componentWillMount() {
+  //   this.setState({
+  //     ...this.state,
+  //   });
+  // }
+
   public render(): JSX.Element {
-    const handleSubmit = this.props.handleSubmit;
-
-    const OrderItemTable = !this.state.isNew && CustomTable as new () => CustomTable<OrderItem>;
-
     return (
       <Jumbotron>
         <div className="Order">
           <Panel>
-            <h1>{this.state.isNew ? 'Nueva ' : ''}Orden</h1>
+            <h1>{this.props.isNew ? 'Nueva ' : ''}Orden</h1>
           </Panel>
           <Panel>
-            <form onSubmit={handleSubmit(this.handleSubmit)}>
+            <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
               <Field
                 name="id"
                 type="text"
@@ -124,13 +129,13 @@ class OrderPage extends React.Component<OrderProps, OrderState> {
             </form>
           </Panel>
           {
-            OrderItemTable &&
-            <div>
+            !this.props.isNew &&
+            (<div>
               <Panel>
                 <h1>Lineas</h1>
               </Panel>
               <Panel className="utility-toolbar">
-                <LinkContainer to={`/orders/${this.state.id}/orderItems/new`}>
+                <LinkContainer to={`/orders/${this.props.id}/orderItems/new`}>
                   <Button>Nuevo inventario</Button>
                 </LinkContainer>
                 <SearchInput />
@@ -140,7 +145,7 @@ class OrderPage extends React.Component<OrderProps, OrderState> {
                 items={this.props.orderItems}
                 itemClick={this.handleClick}
               />
-            </div>
+            </div>)
           }
         </div>
       </Jumbotron>
@@ -153,6 +158,8 @@ const OrderFormWrapper = reduxForm({
 })(OrderPage);
 
 interface MapStateResult {
+  id: string;
+  isNew: boolean;
   order: Order;
   orderItems: OrderItems;
 }
@@ -162,12 +169,23 @@ type StateToProps = MapStateToProps<MapStateResult, RouteComponentProps<any>>;
 const mapStateToProps: StateToProps =
   (state: RXState, ownProps) => {
     const { orders } = state;
-    const orderId = ownProps && ownProps.match.params.id;
-    const order = orderId ? orders[orderId] : { id: uuid() } as Order;
+    let isNew = false;
+    let orderId = ownProps && ownProps.match.params.id;
+    if (
+      !orderId ||
+      !orders[orderId]
+    ) {
+      orderId = uuid();
+      isNew = true;
+    }
+
+    const order = !isNew ? orders[orderId] : { id: orderId } as Order;
 
     const filter = filteredOrderItemsByOrder({id: orderId} as Order);
 
     return {
+      id: orderId,
+      isNew,
       order,
       orderItems: filter(state),
       initialValues: {
