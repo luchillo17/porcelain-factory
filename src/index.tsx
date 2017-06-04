@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -49,7 +49,7 @@ ReactDOM.render(
           <Route path="/orders/new" component={Order} />
           <Route path="/orders/:id" component={Order} />
           <Route path="/orders" component={Orders} />
-          <Route path="/" exact={true} component={Products} />
+          <Redirect from="/" to="orders" />
         </Switch>
       </div>
     </Router>
